@@ -11,6 +11,10 @@
   "scripts": {
     "build": "babel src --out-dir dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Arxivar/stylelint-plugin-arx.git"
+  },
   "author": "Abletech",
   "license": "ISC",
   "dependencies": {
