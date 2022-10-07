@@ -1,0 +1,32 @@
+{
+  "name": "stylelint-plugin-arx",
+  "version": "1.0.0",
+  "description": "Stylelint plugin for managing imports",
+  "main": "dist/index.js",
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ]
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist"
+  },
+  "author": "Abletech",
+  "license": "ISC",
+  "dependencies": {
+    "minimatch": "^5.1.0",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "postcss": "^8.4.17",
+    "postcss-scss": "^4.0.5",
+    "prettier": "2.7.1",
+    "stylelint": "^14.5.1"
+  },
+  "peerDependencies": {
+    "stylelint": "^14.5.1"
+  }
+}

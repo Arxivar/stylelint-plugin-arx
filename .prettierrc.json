@@ -1,0 +1,12 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "multilineArraysWrapThreshold": 1,
+  "jsonRecursiveSort": true,
+  "bracketSameLine": false,
+  "printWidth": 100,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all"
+}
