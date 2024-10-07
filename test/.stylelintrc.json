@@ -1,53 +1,15 @@
 {
-    "extends": "stylelint-config-standard-scss",
-    "plugins": [
-        "stylelint-plugin-arx"
-    ],
-    "ignoreFiles": [
-        "Scripts/app/style/base/**/*.scss",
-        "Scripts/app/style/kendoui/**/*.css",
-        "Scripts/app/style/kendoui/**/*.scss"
-    ],
-    "rules": {
-        "plugin-arx/at-rule-use-file-name-starts-with": [
-            {
-                "files": [
-                    "Scripts/Management/**/*.scss",
-                    "Scripts/Management/**/*.css"
-                ],
-                "mode": "block",
-                "startWith": [
-                    "@appStyle"
-                ],
-                "errorMessage": "Importing file from outside of Management folder is not allowed"
-            },
-            {
-                "files": [
-                    "Scripts/app/**/*.scss",
-                    "Scripts/app/**/*.css"
-                ],
-                "mode": "block",
-                "startWith": [
-                    "@managementSrc/Style"
-                ],
-                "errorMessage": "Importing file from outside of Portal folder is not allowed"
-            },
-            {
-                "files": [
-                    "Scripts/share/**/*.scss",
-                    "Scripts/share/**/*.css"
-                ],
-                "mode": "block",
-                "startWith": [
-                    "@appStyle",
-                    "@managementSrc/Style"
-                ],
-                "errorMessage": "Importing file from outside of Share folder is not allowed"
-            }
-        ],
-        "plugin-arx/at-rule-import-disallow": null,
-        "no-empty-source": null,
-        "scss/at-import-partial-extension": null,
-        "no-missing-end-of-source-newline": null
+  "extends": "stylelint-config-standard-scss",
+  "plugins": ["stylelint-plugin-arx"],
+  "ignoreFiles": [
+    "Scripts/app/style/base/**/*.scss",
+    "Scripts/app/style/kendoui/**/*.css",
+    "Scripts/app/style/kendoui/**/*.scss"
+  ],
+  "rules": {
+    "plugin-arx/no-explicit-style-key": {
+      "propsToCheck": ["color", "font-size"],
+      "fileToExclude": []
     }
+  }
 }
