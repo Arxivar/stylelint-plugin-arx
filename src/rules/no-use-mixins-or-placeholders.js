@@ -27,6 +27,7 @@ const regexPlaceholder = (placeholders) => {
 
 export default function rule(ruleOptions) {
   return (root, result) => {
+    const sourceFilePath = root.source.input.file?.replace(/\\/g, '/');
     root.walkAtRules('include', (atRule) => {
       const isFileToExclude = ruleOptions?.filesToExclude?.some((pattern) =>
         minimatch(sourceFilePath, `**/${pattern}`),
@@ -51,7 +52,7 @@ export default function rule(ruleOptions) {
     });
 
     root.walkAtRules('extend', (atRule) => {
-      const isFileToExclude = ruleOptions.filesToExclude.some((pattern) =>
+      const isFileToExclude = ruleOptions?.filesToExclude?.some((pattern) =>
         minimatch(sourceFilePath, `**/${pattern}`),
       );
 

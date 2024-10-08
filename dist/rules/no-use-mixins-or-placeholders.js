@@ -51,7 +51,9 @@ var regexPlaceholder = function regexPlaceholder(placeholders) {
 function rule(ruleOptions) {
   return function (root, result) {
     root.walkAtRules('include', function (atRule) {
-      var isFileToExclude = ruleOptions.filesToExclude.some(function (pattern) {
+      var _ruleOptions$filesToE;
+
+      var isFileToExclude = ruleOptions === null || ruleOptions === void 0 ? void 0 : (_ruleOptions$filesToE = ruleOptions.filesToExclude) === null || _ruleOptions$filesToE === void 0 ? void 0 : _ruleOptions$filesToE.some(function (pattern) {
         return (0, _minimatch["default"])(sourceFilePath, "**/".concat(pattern));
       });
 
@@ -72,7 +74,9 @@ function rule(ruleOptions) {
       }
     });
     root.walkAtRules('extend', function (atRule) {
-      var isFileToExclude = ruleOptions.filesToExclude.some(function (pattern) {
+      var _ruleOptions$filesToE2;
+
+      var isFileToExclude = ruleOptions === null || ruleOptions === void 0 ? void 0 : (_ruleOptions$filesToE2 = ruleOptions.filesToExclude) === null || _ruleOptions$filesToE2 === void 0 ? void 0 : _ruleOptions$filesToE2.some(function (pattern) {
         return (0, _minimatch["default"])(sourceFilePath, "**/".concat(pattern));
       });
 

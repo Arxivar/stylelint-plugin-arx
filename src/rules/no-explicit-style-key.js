@@ -10,6 +10,7 @@ export const messages = utils.ruleMessages(ruleName, {
 
 export default function rule(ruleOptions) {
   return (root, result) => {
+    const sourceFilePath = root.source.input.file?.replace(/\\/g, '/');
     root.walkDecls((style) => {
       const isFileToExclude = ruleOptions?.filesToExclude?.some((pattern) =>
         minimatch(sourceFilePath, `**/${pattern}`),
