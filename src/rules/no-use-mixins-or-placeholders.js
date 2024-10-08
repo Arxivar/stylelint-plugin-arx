@@ -1,8 +1,7 @@
 import { utils } from 'stylelint';
-import { arxUtils } from '../utils';
-import minimatch from 'minimatch';
+import { arxService } from '../arxService';
 
-export const ruleName = arxUtils.namespace('no-use-mixins-or-placeholders');
+export const ruleName = arxService.namespace('no-use-mixins-or-placeholders');
 
 export const messages = utils.ruleMessages(ruleName, {
   rejectedMixin: (value) => `Avoid using this mixin  ${value}`,
@@ -18,7 +17,6 @@ const regexMixin = (mixins) => {
 };
 
 const regexPlaceholder = (placeholders) => {
-  const GODOPUNTO = '';
   if (placeholders?.length > 0) {
     const _placeholders = placeholders.join('|');
     return new RegExp(`%(${_placeholders})\\b$`);
@@ -28,17 +26,15 @@ const regexPlaceholder = (placeholders) => {
 
 export default function rule(ruleOptions) {
   return (root, result) => {
-    const sourceFilePath = root.source.input.file?.replace(/\\/g, '/');
+    // check if file is to exclude
+    const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
+
+    if (isFileToExclude) {
+      return;
+    }
+
     root.walkAtRules('include', (atRule) => {
-      const isFileToExclude = ruleOptions?.filesToExclude?.some((pattern) =>
-        minimatch(sourceFilePath, `**/${pattern}`),
-      );
-
-      if (isFileToExclude) {
-        return;
-      }
-
-      const mixins = ruleOptions.mixins;
+      const mixins = ruleOptions?.mixins;
       const resultRegexMixin = regexMixin(mixins);
 
       // Cerca il mixin specifico
@@ -53,15 +49,7 @@ export default function rule(ruleOptions) {
     });
 
     root.walkAtRules('extend', (atRule) => {
-      const isFileToExclude = ruleOptions?.filesToExclude?.some((pattern) =>
-        minimatch(sourceFilePath, `**/${pattern}`),
-      );
-
-      if (isFileToExclude) {
-        return;
-      }
-
-      const placeholders = ruleOptions.placeholders;
+      const placeholders = ruleOptions?.placeholders;
 
       const resultRegexPlaceholders = regexPlaceholder(placeholders);
 

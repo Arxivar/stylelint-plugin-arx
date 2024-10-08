@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = rule;
 exports.ruleName = exports.messages = void 0;
 var _stylelint = require("stylelint");
-var _utils = require("../utils");
-var ruleName = exports.ruleName = (0, _utils.namespace)('no-dot-prefix-import-rule');
+var _arxService = require("../arxService");
+var ruleName = exports.ruleName = _arxService.arxService.namespace('no-dot-prefix-import-rule');
 var messages = exports.messages = _stylelint.utils.ruleMessages(ruleName, {
   expected: 'Import path should not start with dot'
 });
@@ -15,7 +15,7 @@ function rule(allowedAliasList) {
   return function (root, result) {
     ['use', 'import'].forEach(function (rule) {
       root.walkAtRules(rule, function (atRule) {
-        if ((0, _utils.extractImportPath)(atRule).startsWith('.')) {
+        if (_arxService.arxService.extractImportPath(atRule).startsWith('.')) {
           _stylelint.utils.report({
             message: messages.expected,
             node: atRule,

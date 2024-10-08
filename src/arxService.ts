@@ -1,3 +1,5 @@
+import minimatch from 'minimatch';
+
 const prefix = 'plugin-arx';
 
 const pluginPath = './dist/index.js';
@@ -38,14 +40,14 @@ const getSourceFilePath = (root) => root.source.input.file?.replace(/\\/g, '/');
  * @property {string[]} files - array of file patterns to check
  * @returns {boolean} Returns if the current file is included in some of the specified paths
  */
-const isFileIncluded = (root, files) => {
+const isFileMatched = (root, files) => {
   const sourceFilePath = getSourceFilePath(root);
   return files?.some((pattern) => minimatch(sourceFilePath, `**/${pattern}`));
 };
 
-export const arxUtils = {
+export const arxService = {
   pluginPath,
   namespace,
   extractImportPath,
-  isFileIncluded,
+  isFileMatched,
 };

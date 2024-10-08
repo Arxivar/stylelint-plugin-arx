@@ -1,7 +1,7 @@
 import { utils } from 'stylelint';
-import { arxUtils } from '../utils';
+import { arxService } from '../arxService';
 
-export const ruleName = arxUtils.namespace('no-scss-color-variables');
+export const ruleName = arxService.namespace('no-scss-color-variables');
 
 const possibleTypes = 'Theme|Primary|Secondary|Success|Warning|Danger|Info';
 
@@ -13,11 +13,18 @@ const regexColor = new RegExp(
 );
 
 export const messages = utils.ruleMessages(ruleName, {
-  rejected: (variable) => `Avoid using SCSS color variable ${variable}, use Mixins instead`,
+  rejected: (variable) => `Avoid using SCSS color variable ${variable}, use mixins instead`,
 });
 
-export default function rule(option) {
+export default function rule(ruleOptions) {
   return (root, result) => {
+    // check if file is to exclude
+    const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
+
+    if (isFileToExclude) {
+      return;
+    }
+
     root.walkDecls((style) => {
       if (style.value.match(regexBackground) || style.value.match(regexColor)) {
         utils.report({

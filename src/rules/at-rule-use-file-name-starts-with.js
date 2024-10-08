@@ -1,12 +1,12 @@
 import { utils } from 'stylelint';
-import { arxUtils } from '../utils';
+import { arxService } from '../arxService';
 
 const modes = {
   REQUIRED: 'required',
   BLOCK: 'block',
 };
 
-export const ruleName = arxUtils.namespace('at-rule-use-file-name-starts-with');
+export const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
 
 export const messages = utils.ruleMessages(ruleName, {
   expected: (errorMessage) => errorMessage,
@@ -15,14 +15,16 @@ export const messages = utils.ruleMessages(ruleName, {
 export default function rule(ruleOptions) {
   return (root, result) => {
     // try to match a rule
-    const matchedRule = ruleOptions.filter((rule) => utils.isFileIncluded(root, rule.files))?.[0];
+    const matchedRule = ruleOptions.filter((rule) =>
+      arxService.isFileMatched(root, rule.files),
+    )?.[0];
 
     if (!matchedRule) {
       return;
     }
 
     root.walkAtRules('use', (atRule) => {
-      const atRuleFilePath = arxUtils.extractImportPath(atRule);
+      const atRuleFilePath = arxService.extractImportPath(atRule);
       let startsWithMatchList = [];
 
       if (Array.isArray(matchedRule.startWith)) {

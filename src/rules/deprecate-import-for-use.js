@@ -1,7 +1,7 @@
 import { utils } from 'stylelint';
-import { arxUtils } from '../utils';
+import { arxService } from '../arxService';
 
-export const ruleName = arxUtils.namespace('deprecate-import-for-use');
+export const ruleName = arxService.namespace('deprecate-import-for-use');
 
 export const messages = utils.ruleMessages(ruleName, {
   expected: "'@import' is deprecated. Instead use '@use'",

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = rule;
 exports.ruleName = exports.meta = exports.messages = void 0;
 var _stylelint = require("stylelint");
-var _utils = require("../utils");
-var ruleName = exports.ruleName = (0, _utils.namespace)('deprecate-import-for-use');
+var _arxService = require("../arxService");
+var ruleName = exports.ruleName = _arxService.arxService.namespace('deprecate-import-for-use');
 var messages = exports.messages = _stylelint.utils.ruleMessages(ruleName, {
   expected: "'@import' is deprecated. Instead use '@use'"
 });
