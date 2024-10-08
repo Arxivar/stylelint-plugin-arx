@@ -1,8 +1,8 @@
 import { utils } from 'stylelint';
-import { namespace } from '../utils';
 import minimatch from 'minimatch';
+import { arxUtils } from '../utils';
 
-export const ruleName = namespace('no-explicit-style-key');
+export const ruleName = arxUtils.namespace('no-explicit-style-key');
 
 export const messages = utils.ruleMessages(ruleName, {
   rejected: (variable) => `Avoid using ${variable}, use Mixins instead`,

@@ -1,33 +1,28 @@
-import minimatch from 'minimatch';
 import { utils } from 'stylelint';
-import { namespace, extractImportPath } from '../utils';
+import { arxUtils } from '../utils';
 
 const modes = {
   REQUIRED: 'required',
   BLOCK: 'block',
 };
 
-export const ruleName = namespace('at-rule-use-file-name-starts-with');
+export const ruleName = arxUtils.namespace('at-rule-use-file-name-starts-with');
 
 export const messages = utils.ruleMessages(ruleName, {
-  expected: errorMessage => errorMessage
+  expected: (errorMessage) => errorMessage,
 });
 
 export default function rule(ruleOptions) {
   return (root, result) => {
-    const sourceFilePath = root.source.input.file?.replace(/\\/g, '/');
-
     // try to match a rule
-    const matchedRule = ruleOptions.filter((rule) =>
-      rule.files.some((pattern) => minimatch(sourceFilePath, `**/${pattern}`)),
-    )?.[0];
+    const matchedRule = ruleOptions.filter((rule) => utils.isFileIncluded(root, rule.files))?.[0];
 
     if (!matchedRule) {
       return;
     }
 
     root.walkAtRules('use', (atRule) => {
-      const atRuleFilePath = extractImportPath(atRule);
+      const atRuleFilePath = arxUtils.extractImportPath(atRule);
       let startsWithMatchList = [];
 
       if (Array.isArray(matchedRule.startWith)) {

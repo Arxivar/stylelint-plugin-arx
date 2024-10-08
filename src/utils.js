@@ -1,10 +1,10 @@
 const prefix = 'plugin-arx';
 
-export const pluginPath = './dist/index.js';
+const pluginPath = './dist/index.js';
 
-export const namespace = (ruleName) => `${prefix}/${ruleName}`;
+const namespace = (ruleName) => `${prefix}/${ruleName}`;
 
-export const extractImportPath = (atRule) => {
+const extractImportPath = (atRule) => {
   const splitParams = atRule.params.split(' ');
   const quoteParams = splitParams.filter((param) => param.match(/^['"]/));
 
@@ -25,4 +25,27 @@ export const extractImportPath = (atRule) => {
       // remove quotes at the end of the path
       .replace(/['"]$/, '')
   );
+};
+
+/**
+ * @property {any} root - root value coming from default rule function
+ * @returns {string} Returns the source file path
+ */
+const getSourceFilePath = (root) => root.source.input.file?.replace(/\\/g, '/');
+
+/**
+ * @property {any} root - root value coming from default rule function
+ * @property {string[]} files - array of file patterns to check
+ * @returns {boolean} Returns if the current file is included in some of the specified paths
+ */
+const isFileIncluded = (root, files) => {
+  const sourceFilePath = getSourceFilePath(root);
+  return files?.some((pattern) => minimatch(sourceFilePath, `**/${pattern}`));
+};
+
+export const arxUtils = {
+  pluginPath,
+  namespace,
+  extractImportPath,
+  isFileIncluded,
 };

@@ -1,7 +1,7 @@
 import { utils } from 'stylelint';
-import { namespace } from '../utils';
+import { arxUtils } from '../utils';
 
-export const ruleName = namespace('no-scss-color-variables');
+export const ruleName = arxUtils.namespace('no-scss-color-variables');
 
 const possibleTypes = 'Theme|Primary|Secondary|Success|Warning|Danger|Info';
 

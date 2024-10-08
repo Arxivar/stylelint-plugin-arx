@@ -1,16 +1,16 @@
 import { utils } from 'stylelint';
-import { namespace } from '../utils';
+import { arxUtils } from '../utils';
 
-export const ruleName = namespace('deprecate-import-for-use');
+export const ruleName = arxUtils.namespace('deprecate-import-for-use');
 
 export const messages = utils.ruleMessages(ruleName, {
-  expected: "'@import' is deprecated. Instead use '@use'"
+  expected: "'@import' is deprecated. Instead use '@use'",
 });
 
 export const meta = {
   description: 'Sass lang documentation',
-  url: 'https://sass-lang.com/documentation/at-rules/use'
-}
+  url: 'https://sass-lang.com/documentation/at-rules/use',
+};
 
 export default function rule(option) {
   return (root, result) => {

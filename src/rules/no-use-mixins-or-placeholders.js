@@ -1,8 +1,8 @@
 import { utils } from 'stylelint';
-import { namespace } from '../utils';
+import { arxUtils } from '../utils';
 import minimatch from 'minimatch';
 
-export const ruleName = namespace('no-use-mixins-or-placeholders');
+export const ruleName = arxUtils.namespace('no-use-mixins-or-placeholders');
 
 export const messages = utils.ruleMessages(ruleName, {
   rejectedMixin: (value) => `Avoid using this mixin  ${value}`,
