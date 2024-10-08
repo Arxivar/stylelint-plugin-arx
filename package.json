@@ -5,11 +5,15 @@
   "main": "dist/index.js",
   "babel": {
     "presets": [
-      "@babel/env"
+      "@babel/preset-env",
+      "@babel/preset-typescript"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-modules-commonjs"
     ]
   },
   "scripts": {
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist  --extensions \".ts,.js\""
   },
   "repository": {
     "type": "git",
@@ -19,16 +23,22 @@
   "license": "ISC",
   "dependencies": {
     "minimatch": "^5.1.0",
-    "typescript": "^4.8.4"
+    "source-map-loader": "^5.0.0",
+    "ts-loader": "^9.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.19.3",
-    "@babel/preset-env": "^7.19.3",
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "@babel/preset-typescript": "^7.25.7",
+    "@types/node": "^22.7.5",
+    "@types/stylelint": "^14.0.0",
     "postcss": "^8.4.17",
     "postcss-scss": "^4.0.5",
     "prettier": "2.7.1",
-    "stylelint": "^14.5.1"
+    "stylelint": "^14.5.1",
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "stylelint": "^14.5.1"

@@ -9,7 +9,7 @@ var _stylelint = require("stylelint");
 var _utils = require("../utils");
 var _minimatch = _interopRequireDefault(require("minimatch"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
-var ruleName = exports.ruleName = (0, _utils.namespace)('no-use-mixins-or-placeholders');
+var ruleName = exports.ruleName = (0, _utils.namespace)('no-use-me');
 var messages = exports.messages = _stylelint.utils.ruleMessages(ruleName, {
   rejectedMixin: function rejectedMixin(value) {
     return "Avoid using this mixin  ".concat(value);
@@ -26,7 +26,6 @@ var regexMixin = function regexMixin(mixins) {
   return undefined;
 };
 var regexPlaceholder = function regexPlaceholder(placeholders) {
-  var GODOPUNTO = '';
   if ((placeholders === null || placeholders === void 0 ? void 0 : placeholders.length) > 0) {
     var _placeholders = placeholders.join('|');
     return new RegExp("%(".concat(_placeholders, ")\\b$"));

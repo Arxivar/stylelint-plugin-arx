@@ -5,20 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = rule;
 exports.ruleName = exports.messages = void 0;
-
 var _stylelint = require("stylelint");
-
 var _utils = require("../utils");
-
-var ruleName = (0, _utils.namespace)('no-dot-prefix-import-rule');
-exports.ruleName = ruleName;
-
-var messages = _stylelint.utils.ruleMessages(ruleName, {
+var ruleName = exports.ruleName = (0, _utils.namespace)('no-dot-prefix-import-rule');
+var messages = exports.messages = _stylelint.utils.ruleMessages(ruleName, {
   expected: 'Import path should not start with dot'
 });
-
-exports.messages = messages;
-
 function rule(allowedAliasList) {
   return function (root, result) {
     ['use', 'import'].forEach(function (rule) {
@@ -35,6 +27,5 @@ function rule(allowedAliasList) {
     });
   };
 }
-
 rule.ruleName = ruleName;
 rule.messages = messages;

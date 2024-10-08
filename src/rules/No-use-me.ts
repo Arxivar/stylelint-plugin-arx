@@ -2,7 +2,7 @@ import { utils } from 'stylelint';
 import { namespace } from '../utils';
 import minimatch from 'minimatch';
 
-export const ruleName = namespace('no-use-mixins-or-placeholders');
+export const ruleName = namespace('no-use-me');
 
 export const messages = utils.ruleMessages(ruleName, {
   rejectedMixin: (value) => `Avoid using this mixin  ${value}`,
@@ -18,7 +18,6 @@ const regexMixin = (mixins) => {
 };
 
 const regexPlaceholder = (placeholders) => {
-  const GODOPUNTO = '';
   if (placeholders?.length > 0) {
     const _placeholders = placeholders.join('|');
     return new RegExp(`%(${_placeholders})\\b$`);
