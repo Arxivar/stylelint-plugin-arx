@@ -1,5 +1,10 @@
 import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
+import {
+  AtRuleUseFileNameStartsWithMode,
+  AtRuleUseFileNameStartsWithRuleOptions,
+} from '../types/RuleTypes';
+import _ from 'lodash';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
@@ -8,15 +13,10 @@ const messages = utils.ruleMessages(ruleName, {
   expected: (errorMessage: string) => errorMessage,
 });
 
-const ruleBase: RuleBase = (ruleOptions) => {
+const ruleBase: RuleBase<AtRuleUseFileNameStartsWithRuleOptions> = (ruleOptions) => {
   return (root, result) => {
-    const modes = {
-      REQUIRED: 'required',
-      BLOCK: 'block',
-    };
-
     // try to match a rule
-    const matchedRule = ruleOptions.filter((rule) =>
+    const matchedRule = _.filter(ruleOptions, (rule) =>
       arxService.isFileMatched(root, rule.files),
     )?.[0];
 
@@ -35,7 +35,7 @@ const ruleBase: RuleBase = (ruleOptions) => {
         startsWithMatchList = [matchedRule.startWith];
       }
 
-      if (matchedRule.mode === modes.BLOCK) {
+      if (matchedRule.mode === AtRuleUseFileNameStartsWithMode.BLOCK) {
         startsWithMatchList.forEach((startWithString) => {
           if (atRuleFilePath.startsWith(startWithString)) {
             // Se il file importato inizia con una delle stringhe bloccate, genera un avviso

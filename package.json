@@ -22,6 +22,7 @@
   "author": "Abletech",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.21",
     "minimatch": "^5.1.0",
     "source-map-loader": "^5.0.0",
     "ts-loader": "^9.5.1"
