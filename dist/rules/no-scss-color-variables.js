@@ -34,8 +34,6 @@ var ruleBase = function ruleBase(ruleOptions) {
 
     // Iterate through each declaration in the stylesheet
     root.walkDecls(function (style) {
-      console.log('regexColor', regexColor);
-      console.log('style', style.value);
       // If a style declaration value matches the background or color variable patterns
       if (style.value.match(regexBackground) || style.value.match(regexColor)) {
         // add the error message to show

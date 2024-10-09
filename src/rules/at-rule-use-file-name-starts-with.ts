@@ -1,19 +1,20 @@
-import { utils } from 'stylelint';
+import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
 
-const modes = {
-  REQUIRED: 'required',
-  BLOCK: 'block',
-};
-
-export const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
-
-export const messages = utils.ruleMessages(ruleName, {
-  expected: (errorMessage) => errorMessage,
+// Define the rule name using a namespace pattern from arxService
+const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
+// Define the messages for rule violations
+const messages = utils.ruleMessages(ruleName, {
+  expected: (errorMessage: string) => errorMessage,
 });
 
-export default function rule(ruleOptions) {
+const ruleBase: RuleBase = (ruleOptions) => {
   return (root, result) => {
+    const modes = {
+      REQUIRED: 'required',
+      BLOCK: 'block',
+    };
+
     // try to match a rule
     const matchedRule = ruleOptions.filter((rule) =>
       arxService.isFileMatched(root, rule.files),
@@ -27,6 +28,7 @@ export default function rule(ruleOptions) {
       const atRuleFilePath = arxService.extractImportPath(atRule);
       let startsWithMatchList = [];
 
+      // Verifica se la regola startWith è un array, altrimenti la trasforma in un array
       if (Array.isArray(matchedRule.startWith)) {
         startsWithMatchList = matchedRule.startWith;
       } else {
@@ -36,6 +38,7 @@ export default function rule(ruleOptions) {
       if (matchedRule.mode === modes.BLOCK) {
         startsWithMatchList.forEach((startWithString) => {
           if (atRuleFilePath.startsWith(startWithString)) {
+            // Se il file importato inizia con una delle stringhe bloccate, genera un avviso
             utils.report({
               message: messages.expected(matchedRule.errorMessage),
               node: atRule,
@@ -48,8 +51,13 @@ export default function rule(ruleOptions) {
       }
     });
   };
-}
+};
 
-rule.primaryOptionArray = true;
-rule.ruleName = ruleName;
-rule.messages = messages;
+// Complete the stylelint rule
+const rule: Rule = Object.assign(ruleBase, {
+  ruleName: ruleName,
+  messages: messages,
+  primaryOptionArray: true,
+});
+
+export default rule;

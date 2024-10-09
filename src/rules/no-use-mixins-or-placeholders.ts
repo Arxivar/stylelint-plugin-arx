@@ -1,14 +1,18 @@
-import { utils } from 'stylelint';
+import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
+import { NoUseMixinsOrPlaceholdersRuleOptions } from '../types/RuleTypes';
 
-export const ruleName = arxService.namespace('no-use-mixins-or-placeholders');
+// Define the rule name using a namespace pattern from arxService
+const ruleName = arxService.namespace('no-use-mixins-or-placeholders');
 
-export const messages = utils.ruleMessages(ruleName, {
+// Define the messages for rule violations
+const messages = utils.ruleMessages(ruleName, {
   rejectedMixin: (value) => `Avoid using this mixin  ${value}`,
   rejectedPlaceholder: (value) => `Avoid using this placeholder ${value}`,
 });
 
-const regexMixin = (mixins) => {
+// Helper function to create a regex to match mixins
+const regexMixin = (mixins: string[]) => {
   if (mixins?.length > 0) {
     const _mixins = mixins.join('|');
     return new RegExp(`.*\\.(${_mixins})\\b$`, 'g');
@@ -16,7 +20,8 @@ const regexMixin = (mixins) => {
   return undefined;
 };
 
-const regexPlaceholder = (placeholders) => {
+// Helper function to create a regex to match placeholders
+const regexPlaceholder = (placeholders: string[]) => {
   if (placeholders?.length > 0) {
     const _placeholders = placeholders.join('|');
     return new RegExp(`%(${_placeholders})\\b$`);
@@ -24,7 +29,7 @@ const regexPlaceholder = (placeholders) => {
   return undefined;
 };
 
-export default function rule(ruleOptions) {
+const ruleBase: RuleBase<NoUseMixinsOrPlaceholdersRuleOptions> = (ruleOptions) => {
   return (root, result) => {
     // check if file is to exclude
     const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
@@ -64,7 +69,12 @@ export default function rule(ruleOptions) {
       }
     });
   };
-}
+};
 
-rule.ruleName = ruleName;
-rule.messages = messages;
+// Complete the stylelint rule
+const rule: Rule = Object.assign(ruleBase, {
+  ruleName: ruleName,
+  messages: messages,
+});
+
+export default rule;

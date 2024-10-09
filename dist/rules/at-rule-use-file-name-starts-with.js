@@ -3,23 +3,25 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = rule;
-exports.ruleName = exports.messages = void 0;
+exports["default"] = void 0;
 var _stylelint = require("stylelint");
 var _arxService = require("../arxService");
-var modes = {
-  REQUIRED: 'required',
-  BLOCK: 'block'
-};
-var ruleName = exports.ruleName = _arxService.arxService.namespace('at-rule-use-file-name-starts-with');
-var messages = exports.messages = _stylelint.utils.ruleMessages(ruleName, {
+// Define the rule name using a namespace pattern from arxService
+var ruleName = _arxService.arxService.namespace('at-rule-use-file-name-starts-with');
+// Define the messages for rule violations
+var messages = _stylelint.utils.ruleMessages(ruleName, {
   expected: function expected(errorMessage) {
     return errorMessage;
   }
 });
-function rule(ruleOptions) {
+var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
     var _ruleOptions$filter;
+    var modes = {
+      REQUIRED: 'required',
+      BLOCK: 'block'
+    };
+
     // try to match a rule
     var matchedRule = (_ruleOptions$filter = ruleOptions.filter(function (rule) {
       return _arxService.arxService.isFileMatched(root, rule.files);
@@ -30,6 +32,8 @@ function rule(ruleOptions) {
     root.walkAtRules('use', function (atRule) {
       var atRuleFilePath = _arxService.arxService.extractImportPath(atRule);
       var startsWithMatchList = [];
+
+      // Verifica se la regola startWith è un array, altrimenti la trasforma in un array
       if (Array.isArray(matchedRule.startWith)) {
         startsWithMatchList = matchedRule.startWith;
       } else {
@@ -38,6 +42,7 @@ function rule(ruleOptions) {
       if (matchedRule.mode === modes.BLOCK) {
         startsWithMatchList.forEach(function (startWithString) {
           if (atRuleFilePath.startsWith(startWithString)) {
+            // Se il file importato inizia con una delle stringhe bloccate, genera un avviso
             _stylelint.utils.report({
               message: messages.expected(matchedRule.errorMessage),
               node: atRule,
@@ -49,7 +54,12 @@ function rule(ruleOptions) {
       } else if (matchedRule.mode.REQUIRED) {}
     });
   };
-}
-rule.primaryOptionArray = true;
-rule.ruleName = ruleName;
-rule.messages = messages;
+};
+
+// Complete the stylelint rule
+var rule = Object.assign(ruleBase, {
+  ruleName: ruleName,
+  messages: messages,
+  primaryOptionArray: true
+});
+var _default = exports["default"] = rule;
