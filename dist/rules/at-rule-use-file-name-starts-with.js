@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _stylelint = require("stylelint");
 var _arxService = require("../arxService");
+var _RuleTypes = require("../types/RuleTypes");
+var _lodash = _interopRequireDefault(require("lodash"));
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 // Define the rule name using a namespace pattern from arxService
 var ruleName = _arxService.arxService.namespace('at-rule-use-file-name-starts-with');
 // Define the messages for rule violations
@@ -16,16 +19,11 @@ var messages = _stylelint.utils.ruleMessages(ruleName, {
 });
 var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
-    var _ruleOptions$filter;
-    var modes = {
-      REQUIRED: 'required',
-      BLOCK: 'block'
-    };
-
+    var _$filter;
     // try to match a rule
-    var matchedRule = (_ruleOptions$filter = ruleOptions.filter(function (rule) {
+    var matchedRule = (_$filter = _lodash["default"].filter(ruleOptions, function (rule) {
       return _arxService.arxService.isFileMatched(root, rule.files);
-    })) === null || _ruleOptions$filter === void 0 ? void 0 : _ruleOptions$filter[0];
+    })) === null || _$filter === void 0 ? void 0 : _$filter[0];
     if (!matchedRule) {
       return;
     }
@@ -39,7 +37,7 @@ var ruleBase = function ruleBase(ruleOptions) {
       } else {
         startsWithMatchList = [matchedRule.startWith];
       }
-      if (matchedRule.mode === modes.BLOCK) {
+      if (matchedRule.mode === _RuleTypes.AtRuleUseFileNameStartsWithMode.BLOCK) {
         startsWithMatchList.forEach(function (startWithString) {
           if (atRuleFilePath.startsWith(startWithString)) {
             // Se il file importato inizia con una delle stringhe bloccate, genera un avviso
