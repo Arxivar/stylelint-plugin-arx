@@ -1,6 +1,6 @@
 import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
-import { NoUseMixinsOrPlaceholdersRuleOptions } from '../types/RuleTypes';
+import { IsRuleActiveType, NoUseMixinsOrPlaceholdersRuleOptions } from '../types/RuleTypes';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('no-use-mixins-or-placeholders');
@@ -29,17 +29,27 @@ const regexPlaceholder = (placeholders: string[]) => {
   return undefined;
 };
 
-const ruleBase: RuleBase<NoUseMixinsOrPlaceholdersRuleOptions> = (ruleOptions) => {
+const ruleBase: RuleBase<NoUseMixinsOrPlaceholdersRuleOptions | IsRuleActiveType> = (
+  ruleOptions,
+) => {
   return (root, result) => {
+    const ruleSettings =
+      arxService.getRuleSettings<NoUseMixinsOrPlaceholdersRuleOptions>(ruleOptions);
+    if (!ruleSettings.isRuleActive) {
+      return;
+    }
     // check if file is to exclude
-    const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
+    const isFileToExclude = arxService.isFileMatched(
+      root,
+      ruleSettings.ruleOptions?.filesToExclude,
+    );
 
     if (isFileToExclude) {
       return;
     }
 
     root.walkAtRules('include', (atRule) => {
-      const mixins = ruleOptions?.mixins;
+      const mixins = ruleSettings.ruleOptions?.mixins;
       const resultRegexMixin = regexMixin(mixins);
 
       // Cerca il mixin specifico
@@ -54,7 +64,7 @@ const ruleBase: RuleBase<NoUseMixinsOrPlaceholdersRuleOptions> = (ruleOptions) =
     });
 
     root.walkAtRules('extend', (atRule) => {
-      const placeholders = ruleOptions?.placeholders;
+      const placeholders = ruleSettings.ruleOptions?.placeholders;
 
       const resultRegexPlaceholders = regexPlaceholder(placeholders);
 

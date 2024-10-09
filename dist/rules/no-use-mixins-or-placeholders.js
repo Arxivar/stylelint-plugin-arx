@@ -38,13 +38,19 @@ var regexPlaceholder = function regexPlaceholder(placeholders) {
 };
 var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
+    var _ruleSettings$ruleOpt;
+    var ruleSettings = _arxService.arxService.getRuleSettings(ruleOptions);
+    if (!ruleSettings.isRuleActive) {
+      return;
+    }
     // check if file is to exclude
-    var isFileToExclude = _arxService.arxService.isFileMatched(root, ruleOptions === null || ruleOptions === void 0 ? void 0 : ruleOptions.filesToExclude);
+    var isFileToExclude = _arxService.arxService.isFileMatched(root, (_ruleSettings$ruleOpt = ruleSettings.ruleOptions) === null || _ruleSettings$ruleOpt === void 0 ? void 0 : _ruleSettings$ruleOpt.filesToExclude);
     if (isFileToExclude) {
       return;
     }
     root.walkAtRules('include', function (atRule) {
-      var mixins = ruleOptions === null || ruleOptions === void 0 ? void 0 : ruleOptions.mixins;
+      var _ruleSettings$ruleOpt2;
+      var mixins = (_ruleSettings$ruleOpt2 = ruleSettings.ruleOptions) === null || _ruleSettings$ruleOpt2 === void 0 ? void 0 : _ruleSettings$ruleOpt2.mixins;
       var resultRegexMixin = regexMixin(mixins);
 
       // Cerca il mixin specifico
@@ -58,7 +64,8 @@ var ruleBase = function ruleBase(ruleOptions) {
       }
     });
     root.walkAtRules('extend', function (atRule) {
-      var placeholders = ruleOptions === null || ruleOptions === void 0 ? void 0 : ruleOptions.placeholders;
+      var _ruleSettings$ruleOpt3;
+      var placeholders = (_ruleSettings$ruleOpt3 = ruleSettings.ruleOptions) === null || _ruleSettings$ruleOpt3 === void 0 ? void 0 : _ruleSettings$ruleOpt3.placeholders;
       var resultRegexPlaceholders = regexPlaceholder(placeholders);
 
       // Cerca il placeholder specifico

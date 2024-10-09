@@ -1,6 +1,6 @@
 import { utils, Rule, RuleBase } from 'stylelint';
 import { arxService } from '../arxService';
-import { NoScssColorVariablesRuleOptions } from '../types/RuleTypes';
+import { IsRuleActiveType, NoScssColorVariablesRuleOptions } from '../types/RuleTypes';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('no-scss-color-variables');
@@ -9,10 +9,18 @@ const messages = utils.ruleMessages(ruleName, {
   rejected: (variable) => `Avoid using SCSS color variable ${variable}, use mixins instead`,
 });
 
-const ruleBase: RuleBase<NoScssColorVariablesRuleOptions> = (ruleOptions) => {
+const ruleBase: RuleBase<NoScssColorVariablesRuleOptions | IsRuleActiveType> = (ruleOptions) => {
   return (root, result) => {
+    const ruleSettings = arxService.getRuleSettings<NoScssColorVariablesRuleOptions>(ruleOptions);
+    if (!ruleSettings.isRuleActive) {
+      return;
+    }
+
     // Check if the file matches the exclusion criteria (skip the rule if it does)
-    const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
+    const isFileToExclude = arxService.isFileMatched(
+      root,
+      ruleSettings.ruleOptions?.filesToExclude,
+    );
     // If the file should be excluded, stop further processing
     if (isFileToExclude) {
       return;

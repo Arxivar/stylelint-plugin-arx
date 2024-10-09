@@ -7,11 +7,11 @@ exports["default"] = void 0;
 var _stylelint = require("stylelint");
 var _arxService = require("../arxService");
 // Define the rule name using a namespace pattern from arxService
-var ruleName = _arxService.arxService.namespace('no-scss-color-variables');
+var ruleName = _arxService.arxService.namespace('no-explicit-style-prop');
 // Define the messages for rule violations
 var messages = _stylelint.utils.ruleMessages(ruleName, {
-  rejected: function rejected(variable) {
-    return "Avoid using SCSS color variable ".concat(variable, ", use mixins instead");
+  rejected: function rejected(prop) {
+    return "Do not set the prop ".concat(prop, " directly");
   }
 });
 var ruleBase = function ruleBase(ruleOptions) {
@@ -22,29 +22,18 @@ var ruleBase = function ruleBase(ruleOptions) {
       return;
     }
 
-    // Check if the file matches the exclusion criteria (skip the rule if it does)
+    // check if file is to exclude
     var isFileToExclude = _arxService.arxService.isFileMatched(root, (_ruleSettings$ruleOpt = ruleSettings.ruleOptions) === null || _ruleSettings$ruleOpt === void 0 ? void 0 : _ruleSettings$ruleOpt.filesToExclude);
-    // If the file should be excluded, stop further processing
     if (isFileToExclude) {
       return;
     }
-
-    // Define the possible types of variables that need to be checked
-    var possibleTypes = 'Theme|Primary|Secondary|Success|Warning|Danger|Info';
-
-    // Regular expression to detect SCSS background variables
-    var regexBackground = new RegExp("\\$arx(".concat(possibleTypes, ")Background(Main|Below|Above|Hover|Selected|Disabled)\\b"), 'g');
-
-    // Regular expression to detect SCSS color variables
-    var regexColor = new RegExp("\\$arx(".concat(possibleTypes, ")Color(Highlighted|Ordinary|Hover|Selected|Disabled)\\b"), 'g');
-
-    // Iterate through each declaration in the stylesheet
     root.walkDecls(function (style) {
-      // If a style declaration value matches the background or color variable patterns
-      if (style.value.match(regexBackground) || style.value.match(regexColor)) {
+      var _ruleSettings$ruleOpt2;
+      // Check if the style property is to lock
+      if ((_ruleSettings$ruleOpt2 = ruleSettings.ruleOptions) !== null && _ruleSettings$ruleOpt2 !== void 0 && (_ruleSettings$ruleOpt2 = _ruleSettings$ruleOpt2.propsToLock) !== null && _ruleSettings$ruleOpt2 !== void 0 && _ruleSettings$ruleOpt2.includes(style.prop)) {
         // add the error message to show
         _stylelint.utils.report({
-          message: messages.rejected(style.value),
+          message: messages.rejected(style.prop),
           node: style,
           result: result,
           ruleName: ruleName

@@ -1,0 +1,5 @@
+@import '@base/baseVariables';
+
+.deprecate-import-for-use {
+  display: baseVariables.$flex;
+}

@@ -1,5 +1,6 @@
 import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
+import { DeprecateImportForUseRuleOptions, IsRuleActiveType } from '../types/RuleTypes';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('deprecate-import-for-use');
@@ -13,13 +14,19 @@ const meta = {
   url: 'https://sass-lang.com/documentation/at-rules/use',
 };
 
-const ruleBase: RuleBase = (option) => {
+const ruleBase: RuleBase<DeprecateImportForUseRuleOptions | IsRuleActiveType> = (ruleOptions) => {
   return (root, result) => {
-    const validOptions = utils.validateOptions(result, ruleName, {
-      actual: option,
-    });
-
-    if (!validOptions) {
+    const ruleSettings = arxService.getRuleSettings<DeprecateImportForUseRuleOptions>(ruleOptions);
+    if (!ruleSettings.isRuleActive) {
+      return;
+    }
+    // Check if the file matches the exclusion criteria (skip the rule if it does)
+    const isFileToExclude = arxService.isFileMatched(
+      root,
+      ruleSettings.ruleOptions?.filesToExclude,
+    );
+    // If the file should be excluded, stop further processing
+    if (isFileToExclude) {
       return;
     }
 

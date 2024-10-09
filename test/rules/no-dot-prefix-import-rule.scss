@@ -1,0 +1,5 @@
+@use '../base/baseVariables';
+
+.no-dot-prefix-import-rule {
+  display: baseVariables.$flex;
+}

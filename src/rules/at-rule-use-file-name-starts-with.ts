@@ -1,6 +1,6 @@
 import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
-import { AtRuleUseFileNameStartsWithRuleOptions } from '../types/RuleTypes';
+import { AtRuleUseFileNameStartsWithRuleOptions, IsRuleActiveType } from '../types/RuleTypes';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
@@ -8,12 +8,21 @@ const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
 const messages = utils.ruleMessages(ruleName, {
   expected: (errorMessage: string) => errorMessage,
 });
+const hasValidRuleOptions = (
+  ruleOptions: any,
+): ruleOptions is AtRuleUseFileNameStartsWithRuleOptions[] => {
+  return Array.isArray(ruleOptions) && ruleOptions?.length > 0;
+};
 
 const ruleBase: RuleBase<AtRuleUseFileNameStartsWithRuleOptions[]> = (ruleOptions) => {
   return (root, result) => {
-    // try to match a rule
-    const matchedRule = ruleOptions.filter((rule) =>
-      arxService.isFileMatched(root, rule.files),
+    if (!hasValidRuleOptions(ruleOptions)) {
+      return;
+    }
+
+    // get the first ruleOptions object where the file is included
+    const matchedRule = ruleOptions?.filter((rule) =>
+      arxService.isFileMatched(root, rule?.files),
     )?.[0];
 
     if (!matchedRule) {

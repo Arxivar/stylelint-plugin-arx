@@ -16,12 +16,17 @@ var meta = {
   description: 'Sass lang documentation',
   url: 'https://sass-lang.com/documentation/at-rules/use'
 };
-var ruleBase = function ruleBase(option) {
+var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
-    var validOptions = _stylelint.utils.validateOptions(result, ruleName, {
-      actual: option
-    });
-    if (!validOptions) {
+    var _ruleSettings$ruleOpt;
+    var ruleSettings = _arxService.arxService.getRuleSettings(ruleOptions);
+    if (!ruleSettings.isRuleActive) {
+      return;
+    }
+    // Check if the file matches the exclusion criteria (skip the rule if it does)
+    var isFileToExclude = _arxService.arxService.isFileMatched(root, (_ruleSettings$ruleOpt = ruleSettings.ruleOptions) === null || _ruleSettings$ruleOpt === void 0 ? void 0 : _ruleSettings$ruleOpt.filesToExclude);
+    // If the file should be excluded, stop further processing
+    if (isFileToExclude) {
       return;
     }
 

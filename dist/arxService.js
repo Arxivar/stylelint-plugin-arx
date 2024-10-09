@@ -49,9 +49,32 @@ var isFileMatched = function isFileMatched(root, files) {
     return (0, _minimatch["default"])(sourceFilePath, "**/".concat(pattern));
   });
 };
+var isRuleOptionsActiveType = function isRuleOptionsActiveType(ruleOptions) {
+  return typeof ruleOptions === 'boolean';
+};
+var getRuleSettings = function getRuleSettings(ruleOptions) {
+  if (isRuleOptionsActiveType(ruleOptions)) {
+    if (!ruleOptions) {
+      return {
+        isRuleActive: false,
+        ruleOptions: undefined
+      };
+    }
+    return {
+      isRuleActive: true,
+      ruleOptions: undefined
+    };
+  } else {
+    return {
+      isRuleActive: true,
+      ruleOptions: ruleOptions
+    };
+  }
+};
 var arxService = exports.arxService = {
   pluginPath: pluginPath,
   namespace: namespace,
   extractImportPath: extractImportPath,
-  isFileMatched: isFileMatched
+  isFileMatched: isFileMatched,
+  getRuleSettings: getRuleSettings
 };

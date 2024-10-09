@@ -14,12 +14,19 @@ var messages = _stylelint.utils.ruleMessages(ruleName, {
     return errorMessage;
   }
 });
+var hasValidRuleOptions = function hasValidRuleOptions(ruleOptions) {
+  return Array.isArray(ruleOptions) && (ruleOptions === null || ruleOptions === void 0 ? void 0 : ruleOptions.length) > 0;
+};
 var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
     var _ruleOptions$filter;
-    // try to match a rule
-    var matchedRule = (_ruleOptions$filter = ruleOptions.filter(function (rule) {
-      return _arxService.arxService.isFileMatched(root, rule.files);
+    if (!hasValidRuleOptions(ruleOptions)) {
+      return;
+    }
+
+    // get the first ruleOptions object where the file is included
+    var matchedRule = ruleOptions === null || ruleOptions === void 0 || (_ruleOptions$filter = ruleOptions.filter(function (rule) {
+      return _arxService.arxService.isFileMatched(root, rule === null || rule === void 0 ? void 0 : rule.files);
     })) === null || _ruleOptions$filter === void 0 ? void 0 : _ruleOptions$filter[0];
     if (!matchedRule) {
       return;

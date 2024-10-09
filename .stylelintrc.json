@@ -34,6 +34,16 @@
         "startWith": ["@external"],
         "errorMessage": "Importing styles from external folder is not allowed"
       }
-    ]
+    ],
+    "plugin-arx/deprecate-import-for-use": {
+      "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"]
+    },
+    "plugin-arx/no-dot-prefix-import-rule": {
+      "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"]
+    },
+    "plugin-arx/no-explicit-style-prop": {
+      "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"],
+      "propsToLock": ["font-family"]
+    }
   }
 }

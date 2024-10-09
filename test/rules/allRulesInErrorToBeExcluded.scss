@@ -4,6 +4,8 @@
 @use '@base/baseVariables';
 @use '@base/baseMixins';
 @use '@base/basePlaceholders';
+@use '../base/baseVariables' as dotBaseVariables;
+@import '@base/baseVariables' as importBaseVariables;
 
 .no-scss-color-variables {
   color: baseVariables.$arxThemeColorHighlighted;
@@ -16,4 +18,16 @@
 
   @extend %btn;
   @extend %item-hover;
+}
+
+.no-explicit-style-prop {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.no-dot-prefix-import-rule {
+  display: dotBaseVariables.$flex;
+}
+
+.deprecate-import-for-use {
+  display: importBaseVariables.$flex;
 }

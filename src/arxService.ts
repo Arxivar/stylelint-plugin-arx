@@ -1,5 +1,6 @@
 import minimatch from 'minimatch';
 import { Root } from 'postcss';
+import { IsRuleActiveType } from './types/RuleTypes';
 
 const prefix = 'plugin-arx';
 
@@ -46,9 +47,36 @@ const isFileMatched = (root: Root, files: string[]): boolean => {
   return files?.some((pattern) => minimatch(sourceFilePath, `**/${pattern}`));
 };
 
+const isRuleOptionsActiveType = (ruleOptions: any): ruleOptions is IsRuleActiveType =>
+  typeof ruleOptions === 'boolean';
+
+const getRuleSettings = <T>(
+  ruleOptions: T | IsRuleActiveType,
+): { ruleOptions: T; isRuleActive: IsRuleActiveType } => {
+  if (isRuleOptionsActiveType(ruleOptions)) {
+    if (!ruleOptions) {
+      return {
+        isRuleActive: false,
+        ruleOptions: undefined,
+      };
+    }
+
+    return {
+      isRuleActive: true,
+      ruleOptions: undefined,
+    };
+  } else {
+    return {
+      isRuleActive: true,
+      ruleOptions: ruleOptions,
+    };
+  }
+};
+
 export const arxService = {
   pluginPath,
   namespace,
   extractImportPath,
   isFileMatched,
+  getRuleSettings,
 };
