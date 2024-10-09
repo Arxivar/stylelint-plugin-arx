@@ -7,6 +7,6 @@
     "stylelint-plugin-arx": "file:.."
   },
   "scripts": {
-    "lint:scss": "stylelint **/*.scss"
+    "lint:scss": "stylelint **/base.scss"
   }
 }

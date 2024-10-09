@@ -1,5 +1,6 @@
 .pippo {
-  color: test.$arxThemeBackgroundMain;
+  background-color: test.$arxThemeBackgroundMain;
+  color: test.$arxThemeColorHighlighted;
 
   @extend %btn-default;
 }

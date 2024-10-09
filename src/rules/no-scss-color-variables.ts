@@ -13,7 +13,6 @@ const ruleBase: RuleBase<NoScssColorVariablesRuleOptions> = (ruleOptions) => {
   return (root, result) => {
     // Check if the file matches the exclusion criteria (skip the rule if it does)
     const isFileToExclude = arxService.isFileMatched(root, ruleOptions?.filesToExclude);
-
     // If the file should be excluded, stop further processing
     if (isFileToExclude) {
       return;
@@ -24,12 +23,14 @@ const ruleBase: RuleBase<NoScssColorVariablesRuleOptions> = (ruleOptions) => {
 
     // Regular expression to detect SCSS background variables
     const regexBackground = new RegExp(
-      `/\$arx(${possibleTypes})Background(Main|Below|Above|Hover|Selected|Disabled)/g`,
+      `\\$arx(${possibleTypes})Background(Main|Below|Above|Hover|Selected|Disabled)\\b`,
+      'g',
     );
 
     // Regular expression to detect SCSS color variables
     const regexColor = new RegExp(
-      `/\$arx(${possibleTypes})Color(Highlighted|Ordinary|Hover|Selected|Disabled)/g`,
+      `\\$arx(${possibleTypes})Color(Highlighted|Ordinary|Hover|Selected|Disabled)\\b`,
+      'g',
     );
 
     // Iterate through each declaration in the stylesheet

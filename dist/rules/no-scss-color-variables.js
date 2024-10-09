@@ -18,7 +18,6 @@ var ruleBase = function ruleBase(ruleOptions) {
   return function (root, result) {
     // Check if the file matches the exclusion criteria (skip the rule if it does)
     var isFileToExclude = _arxService.arxService.isFileMatched(root, ruleOptions === null || ruleOptions === void 0 ? void 0 : ruleOptions.filesToExclude);
-
     // If the file should be excluded, stop further processing
     if (isFileToExclude) {
       return;
@@ -28,13 +27,15 @@ var ruleBase = function ruleBase(ruleOptions) {
     var possibleTypes = 'Theme|Primary|Secondary|Success|Warning|Danger|Info';
 
     // Regular expression to detect SCSS background variables
-    var regexBackground = new RegExp("/$arx(".concat(possibleTypes, ")Background(Main|Below|Above|Hover|Selected|Disabled)/g"));
+    var regexBackground = new RegExp("\\$arx(".concat(possibleTypes, ")Background(Main|Below|Above|Hover|Selected|Disabled)\\b"), 'g');
 
     // Regular expression to detect SCSS color variables
-    var regexColor = new RegExp("/$arx(".concat(possibleTypes, ")Color(Highlighted|Ordinary|Hover|Selected|Disabled)/g"));
+    var regexColor = new RegExp("\\$arx(".concat(possibleTypes, ")Color(Highlighted|Ordinary|Hover|Selected|Disabled)\\b"), 'g');
 
     // Iterate through each declaration in the stylesheet
     root.walkDecls(function (style) {
+      console.log('regexColor', regexColor);
+      console.log('style', style.value);
       // If a style declaration value matches the background or color variable patterns
       if (style.value.match(regexBackground) || style.value.match(regexColor)) {
         // add the error message to show

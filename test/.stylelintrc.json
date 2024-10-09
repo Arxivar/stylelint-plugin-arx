@@ -7,9 +7,26 @@
     "Scripts/app/style/kendoui/**/*.scss"
   ],
   "rules": {
-    "plugin-arx/no-explicit-style-key": {
-      "propsToCheck": ["color", "font-size"],
+    "plugin-arx/no-scss-color-variables": {
       "fileToExclude": []
-    }
+    },
+    "selector-class-pattern": null,
+    "string-quotes": "single",
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": true,
+    "scss/double-slash-comment-whitespace-inside": null,
+    "scss/dollar-variable-pattern": null,
+    "scss/at-mixin-pattern": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-no-shorthand-property-overrides": null,
+    "no-empty-source": null,
+    "rule-empty-line-before": [
+      "always",
+      {
+        "ignore": ["after-comment", "first-nested", "inside-block"]
+      }
+    ],
+    "comment-empty-line-before": null,
+    "scss/double-slash-comment-empty-line-before": null
   }
 }
