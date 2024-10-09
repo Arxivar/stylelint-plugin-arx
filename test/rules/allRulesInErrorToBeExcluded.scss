@@ -1,0 +1,19 @@
+/*
+* This file should include rule each test and should never get an error from stylelint if the file is excluded by the rule params (e.g: filesToExclude) 
+*/
+@use '@base/baseVariables';
+@use '@base/baseMixins';
+@use '@base/basePlaceholders';
+
+.no-scss-color-variables {
+  color: baseVariables.$arxThemeColorHighlighted;
+  background-color: baseVariables.$arxThemeBackgroundMain;
+}
+
+.no-use-mixins-or-placeholders {
+  @include baseMixins.button-base;
+  @include baseMixins.item-hover;
+
+  @extend %btn;
+  @extend %item-hover;
+}

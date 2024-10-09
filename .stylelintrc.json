@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
-  "plugins": ["stylelint-plugin-arx"],  
+  "plugins": ["stylelint-plugin-arx"],
   "rules": {
     "selector-class-pattern": null,
     "string-quotes": "single",
@@ -21,7 +21,12 @@
     "comment-empty-line-before": null,
     "scss/double-slash-comment-empty-line-before": null,
     "plugin-arx/no-scss-color-variables": {
-      "fileToExclude": []
+      "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"]
+    },
+    "plugin-arx/no-use-mixins-or-placeholders": {
+      "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"],
+      "mixins": ["button-base"],
+      "placeholders": ["btn"]
     }
   }
 }

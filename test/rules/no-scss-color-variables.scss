@@ -1,6 +1,7 @@
 @use '@base/baseVariables';
 
-.test {
+.no-scss-color-variables {
   color: baseVariables.$arxThemeColorHighlighted;
   background-color: baseVariables.$arxThemeBackgroundMain;
+  display: flex;
 }

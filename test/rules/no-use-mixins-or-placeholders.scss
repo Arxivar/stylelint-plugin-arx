@@ -1,0 +1,10 @@
+@use '@base/baseMixins';
+@use '@base/basePlaceholders';
+
+.no-use-mixins-or-placeholders {
+  @include baseMixins.button-base;
+  @include baseMixins.item-hover;
+
+  @extend %btn;
+  @extend %item-hover;
+}
