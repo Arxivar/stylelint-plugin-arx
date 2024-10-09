@@ -1,10 +1,6 @@
 import { Rule, RuleBase, utils } from 'stylelint';
 import { arxService } from '../arxService';
-import {
-  AtRuleUseFileNameStartsWithMode,
-  AtRuleUseFileNameStartsWithRuleOptions,
-} from '../types/RuleTypes';
-import _ from 'lodash';
+import { AtRuleUseFileNameStartsWithRuleOptions } from '../types/RuleTypes';
 
 // Define the rule name using a namespace pattern from arxService
 const ruleName = arxService.namespace('at-rule-use-file-name-starts-with');
@@ -13,10 +9,10 @@ const messages = utils.ruleMessages(ruleName, {
   expected: (errorMessage: string) => errorMessage,
 });
 
-const ruleBase: RuleBase<AtRuleUseFileNameStartsWithRuleOptions> = (ruleOptions) => {
+const ruleBase: RuleBase<AtRuleUseFileNameStartsWithRuleOptions[]> = (ruleOptions) => {
   return (root, result) => {
     // try to match a rule
-    const matchedRule = _.filter(ruleOptions, (rule) =>
+    const matchedRule = ruleOptions.filter((rule) =>
       arxService.isFileMatched(root, rule.files),
     )?.[0];
 
@@ -35,20 +31,17 @@ const ruleBase: RuleBase<AtRuleUseFileNameStartsWithRuleOptions> = (ruleOptions)
         startsWithMatchList = [matchedRule.startWith];
       }
 
-      if (matchedRule.mode === AtRuleUseFileNameStartsWithMode.BLOCK) {
-        startsWithMatchList.forEach((startWithString) => {
-          if (atRuleFilePath.startsWith(startWithString)) {
-            // Se il file importato inizia con una delle stringhe bloccate, genera un avviso
-            utils.report({
-              message: messages.expected(matchedRule.errorMessage),
-              node: atRule,
-              result,
-              ruleName,
-            });
-          }
-        });
-      } else if (matchedRule.mode.REQUIRED) {
-      }
+      startsWithMatchList.forEach((startWithString) => {
+        if (atRuleFilePath.startsWith(startWithString)) {
+          // Se il file importato inizia con una delle stringhe bloccate, genera un avviso
+          utils.report({
+            message: messages.expected(matchedRule.errorMessage),
+            node: atRule,
+            result,
+            ruleName,
+          });
+        }
+      });
     });
   };
 };

@@ -9,7 +9,8 @@
     // Ensure that Babel can safely transpile files in the TypeScript project
     "isolatedModules": true,
     "paths": {
-      "@base/*": ["./test/base/*"]
+      "@base/*": ["./test/base/*"],
+      "@external/*": ["./test/external/*"]
     }
   },
   "include": ["./src/**/*"]

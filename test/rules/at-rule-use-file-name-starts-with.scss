@@ -1,0 +1,12 @@
+@use '@external/externalVariables';
+@use '@external/externalMixins';
+@use '@external/externalPlaceholders';
+
+.at-rule-use-file-name-starts-with {
+  color: externalVariables.$externalThemeColorHighlighted;
+  background-color: externalVariables.$externalThemeBackgroundMain;
+  @include externalMixins.external-button-base;
+  @extend %external-btn;
+
+  display: flex;
+}

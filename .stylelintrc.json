@@ -27,6 +27,13 @@
       "filesToExclude": ["**/rules/allRulesInErrorToBeExcluded.scss"],
       "mixins": ["button-base"],
       "placeholders": ["btn"]
-    }
+    },
+    "plugin-arx/at-rule-use-file-name-starts-with": [
+      {
+        "files": ["**/test/rules/*.scss"],
+        "startWith": ["@external"],
+        "errorMessage": "Importing styles from external folder is not allowed"
+      }
+    ]
   }
 }
