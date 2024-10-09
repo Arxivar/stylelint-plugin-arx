@@ -1,15 +1,7 @@
 {
   "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
-  "plugins": ["stylelint-plugin-arx"],
-  "ignoreFiles": [
-    "Scripts/app/style/base/**/*.scss",
-    "Scripts/app/style/kendoui/**/*.css",
-    "Scripts/app/style/kendoui/**/*.scss"
-  ],
+  "plugins": ["stylelint-plugin-arx"],  
   "rules": {
-    "plugin-arx/no-scss-color-variables": {
-      "fileToExclude": []
-    },
     "selector-class-pattern": null,
     "string-quotes": "single",
     "no-descending-specificity": null,
@@ -27,6 +19,9 @@
       }
     ],
     "comment-empty-line-before": null,
-    "scss/double-slash-comment-empty-line-before": null
+    "scss/double-slash-comment-empty-line-before": null,
+    "plugin-arx/no-scss-color-variables": {
+      "fileToExclude": []
+    }
   }
 }
