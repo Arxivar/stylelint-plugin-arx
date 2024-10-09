@@ -1,0 +1,6 @@
+@use '@base/baseVariables';
+
+.test {
+  color: baseVariables.$arxThemeColorHighlighted;
+  background-color: baseVariables.$arxThemeBackgroundMain;
+}
