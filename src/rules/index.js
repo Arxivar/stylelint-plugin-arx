@@ -3,7 +3,6 @@ import atRuleUseFileNameStartsWith from './at-rule-use-file-name-starts-with';
 import noDotPrefixImportRule from './no-dot-prefix-import-rule';
 import noScssColorVariables from './no-scss-color-variables';
 import noUseMixinsOrPlaceholders from './no-use-mixins-or-placeholders';
-import noUseMe from './No-use-me';
 
 export default {
   'deprecate-import-for-use': deprecateImportForUse,
@@ -12,5 +11,4 @@ export default {
   'no-scss-color-variables': noScssColorVariables,
   'no-use-mixins-or-placeholders': noUseMixinsOrPlaceholders,
   'no-explicit-style-key': noExplicitStyleKey,
-  'no-use-me': noUseMe,
 };

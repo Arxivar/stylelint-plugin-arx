@@ -1,4 +1,5 @@
 import minimatch from 'minimatch';
+import { Root } from 'postcss';
 
 const prefix = 'plugin-arx';
 
@@ -30,17 +31,17 @@ const extractImportPath = (atRule) => {
 };
 
 /**
- * @property {any} root - root value coming from default rule function
+ * @property root - root value coming from RuleBase rule function
  * @returns {string} Returns the source file path
  */
-const getSourceFilePath = (root) => root.source.input.file?.replace(/\\/g, '/');
+const getSourceFilePath = (root: Root): string => root.source.input.file?.replace(/\\/g, '/');
 
 /**
- * @property {any} root - root value coming from default rule function
- * @property {string[]} files - array of file patterns to check
- * @returns {boolean} Returns if the current file is included in some of the specified paths
+ * @property root - root value coming from RuleBase rule function
+ * @property files - array of file patterns to check
+ * @returns Returns if the current file is included in some of the specified paths
  */
-const isFileMatched = (root, files) => {
+const isFileMatched = (root: Root, files: string[]): boolean => {
   const sourceFilePath = getSourceFilePath(root);
   return files?.some((pattern) => minimatch(sourceFilePath, `**/${pattern}`));
 };

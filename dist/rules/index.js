@@ -9,7 +9,6 @@ var _atRuleUseFileNameStartsWith = _interopRequireDefault(require("./at-rule-use
 var _noDotPrefixImportRule = _interopRequireDefault(require("./no-dot-prefix-import-rule"));
 var _noScssColorVariables = _interopRequireDefault(require("./no-scss-color-variables"));
 var _noUseMixinsOrPlaceholders = _interopRequireDefault(require("./no-use-mixins-or-placeholders"));
-var _NoUseMe = _interopRequireDefault(require("./No-use-me"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 var _default = exports["default"] = {
   'deprecate-import-for-use': _deprecateImportForUse["default"],
@@ -17,6 +16,5 @@ var _default = exports["default"] = {
   'no-dot-prefix-import-rule': _noDotPrefixImportRule["default"],
   'no-scss-color-variables': _noScssColorVariables["default"],
   'no-use-mixins-or-placeholders': _noUseMixinsOrPlaceholders["default"],
-  'no-explicit-style-key': noExplicitStyleKey,
-  'no-use-me': _NoUseMe["default"]
+  'no-explicit-style-key': noExplicitStyleKey
 };

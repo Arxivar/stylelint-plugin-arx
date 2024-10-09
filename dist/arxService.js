@@ -30,7 +30,7 @@ var extractImportPath = function extractImportPath(atRule) {
 };
 
 /**
- * @property {any} root - root value coming from default rule function
+ * @property root - root value coming from RuleBase rule function
  * @returns {string} Returns the source file path
  */
 var getSourceFilePath = function getSourceFilePath(root) {
@@ -39,9 +39,9 @@ var getSourceFilePath = function getSourceFilePath(root) {
 };
 
 /**
- * @property {any} root - root value coming from default rule function
- * @property {string[]} files - array of file patterns to check
- * @returns {boolean} Returns if the current file is included in some of the specified paths
+ * @property root - root value coming from RuleBase rule function
+ * @property files - array of file patterns to check
+ * @returns Returns if the current file is included in some of the specified paths
  */
 var isFileMatched = function isFileMatched(root, files) {
   var sourceFilePath = getSourceFilePath(root);
